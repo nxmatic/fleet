@@ -236,6 +236,7 @@ resources:
   - keyhole.yaml
   - lima.yaml
   - nix.yaml
+  - xdg.yaml
 ---
 apiVersion: flox.dev/v1alpha1
 kind: FloxEnvironment
@@ -301,3 +302,22 @@ metadata:
   name: fleet-base-dir
 data:
   fleet-base-dir: /var/lib/gits/nxmatic/fleet-manifests/flox
+---
+apiVersion: flox.dev/v1alpha1
+kind: FloxEnvironment
+metadata:
+  name: xdg
+spec:
+  manifest:
+    version: 1
+    install:
+      xdg-user-dirs:
+        pkg-path: xdg-user-dirs
+      xdg-utils:
+        pkg-path: xdg-utils
+      xdg-ninja:
+        pkg-path: xdg-ninja
+    options: {}
+  env:
+    name: xdg
+    version: 1

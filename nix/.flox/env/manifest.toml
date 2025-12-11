@@ -2,7 +2,7 @@ version = 1
 
 [include]
   [[include.environments]]
-    dir = '/var/lib/gits/nxmatic/fleet-manifests/flox/keyhole'
+    dir = '/var/lib/git/nxmatic/fleet-manifests/flox/keyhole'
 
 [install]
   [install.cachix]
@@ -39,3 +39,8 @@ version = 1
     pkg-path = 'watchexec'
 
 [options]
+
+[profile]
+  common = """
+  PATH="/run/wrappers/bin:$PATH"      
+  """

@@ -16,5 +16,5 @@ render:
 
 update:
 	for pkg in $(PACKAGES); do
-	  kpt pkg update packages/$$pkg
+	  : kpt pkg update packages/$$pkg
 	done

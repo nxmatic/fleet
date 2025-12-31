@@ -38,8 +38,8 @@ rke2-update:
 	$(MAKE) subtree-update name=rke2
 
 subtree-update: ensure-subtree-context finalize-merge check-subtree-clean subtree-update-sync
-	@if [ "$(SUBTREE_REFRESH_LOCKS)" = "true" ]; then \
-		$(MAKE) flox-refresh-locks name=$(SUBTREE_NAME); \
+	@if [ "$(SUBTREE_REFRESH_LOCKS)" = "true" ]; then
+		$(MAKE) flox-refresh-locks name=$(SUBTREE_NAME)
 	fi
 	: "[subtree-update] $(SUBTREE_NAME) applied"
 
@@ -65,13 +65,13 @@ check-subtree-clean: ensure-subtree-context
 	fi
 
 ensure-subtree-context:
-	@if [ -z "$(SUBTREE_NAME)" ]; then \
-		echo "Set name=flox or name=rke2 when invoking this target (e.g. 'make subtree-update name=flox')." >&2; \
-		exit 1; \
+	if [ -z "$(SUBTREE_NAME)" ]; then
+		echo "Set name=flox or name=rke2 when invoking this target (e.g. 'make subtree-update name=flox')." >&2
+		exit 1
 	fi
-	@if [ -z "$(SUBTREE_DIR)" ] || [ -z "$(SUBTREE_BRANCH)" ]; then \
-		echo "Unsupported subtree '$(SUBTREE_NAME)' (expected flox or rke2)." >&2; \
-		exit 1; \
+	if [ -z "$(SUBTREE_DIR)" ] || [ -z "$(SUBTREE_BRANCH)" ]; then
+		echo "Unsupported subtree '$(SUBTREE_NAME)' (expected flox or rke2)." >&2
+		exit 1
 	fi
 
 # Auto-commit any completed merge so batch runs do not stop for editor prompts.
@@ -81,46 +81,46 @@ finalize-merge:
 			echo "Merge in progress with unresolved conflicts; resolve them before rerunning update-flox." >&2;
 			exit 1;
 		fi;
-		echo "Completing pending merge with default message...";
+		: "Completing pending merge with default message...";
 		GIT_MERGE_AUTOEDIT=no git commit --no-edit --quiet;
 	fi
 
 flox-refresh-locks:
-	@echo "Refreshing flox manifest.lock files under $(FLOX_DIR) respecting include dependencies..."
-	@ROOT="$$(pwd -P)"; \
-	FLOX_PATH="$$ROOT/$(FLOX_DIR)"; \
-	shopt -s nullglob; \
-	declare -A refreshed; \
+	: "Refreshing flox manifest.lock files under $(FLOX_DIR) respecting include dependencies..."
+	ROOT="$$(pwd -P)"
+	FLOX_PATH="$$ROOT/$(FLOX_DIR)"
+	shopt -s nullglob
+	declare -A refreshed
 	refresh_env() { \
-		local env_dir="$$1"; \
-		if [ -z "$$env_dir" ] || [ ! -d "$$env_dir/.flox" ]; then \
-			return 0; \
-		fi; \
-		if [[ -n "${refreshed[$$env_dir]+set}" ]]; then \
-			return 0; \
-		fi; \
-		local env_name="$$(basename "$$env_dir")"; \
-		local descriptor="$$env_dir/$$env_name.yaml"; \
-		local manifest="$$env_dir/.flox/env/manifest.toml"; \
-		if [ -f "$$descriptor" ] && command -v $(YQ) >/dev/null 2>&1; then \
-			while IFS= read -r include_dir; do \
-				[ -z "$$include_dir" ] && continue; \
-				case "$$include_dir" in \
-					"$$FLOX_PATH"/*) refresh_env "$$include_dir" ;; \
-				esac; \
-			done < <($(YQ) eval '(.includes // [])[]' "$$descriptor" 2>/dev/null || true); \
-		elif [ -f "$$manifest" ]; then \
-			while IFS= read -r include_dir; do \
-				[ -z "$$include_dir" ] && continue; \
-				case "$$include_dir" in \
-					"$$FLOX_PATH"/*) refresh_env "$$include_dir" ;; \
-				esac; \
-			done < <(sed -n "s|^[[:space:]]*dir = '\(.*\)'|\1|p" "$$manifest"); \
-		fi; \
-		echo "  - updating $$env_dir"; \
-		flox upgrade --dir "$$env_dir" >/dev/null; \
-		refreshed["$$env_dir"]=1; \
-	}; \
-	for env_dir in "$$FLOX_PATH"/*; do \
-		refresh_env "$$env_dir"; \
+		local env_dir="$$1"
+		if [ -z "$$env_dir" ] || [ ! -d "$$env_dir/.flox" ]; then
+			return 0
+		fi
+		if [[ -n "${refreshed[$$env_dir]+set}" ]]; then
+			return 0
+		fi
+		local env_name="$$(basename "$$env_dir")"
+		local descriptor="$$env_dir/$$env_name.yaml"
+		local manifest="$$env_dir/.flox/env/manifest.toml"
+		if [ -f "$$descriptor" ] && command -v $(YQ) >/dev/null 2>&1; then
+			while IFS= read -r include_dir; do
+				[ -z "$$include_dir" ] && continue
+				case "$$include_dir" in
+					"$$FLOX_PATH"/*) refresh_env "$$include_dir" ;
+				esac
+			done < <($(YQ) eval '(.includes // [])[]' "$$descriptor" 2>/dev/null || true)
+		elif [ -f "$$manifest" ]; then
+			while IFS= read -r include_dir; do
+				[ -z "$$include_dir" ] && continue
+				case "$$include_dir" in
+					"$$FLOX_PATH"/*) refresh_env "$$include_dir" ;
+				esac
+			done < <(sed -n "s|^[[:space:]]*dir = '\(.*\)'|\1|p" "$$manifest")
+		fi
+		: "  - updating $$env_dir"
+		flox upgrade --dir "$$env_dir" >/dev/null
+		refreshed["$$env_dir"]=1
+	}
+	for env_dir in "$$FLOX_PATH"/*; do
+		refresh_env "$$env_dir"
 	done

@@ -40,7 +40,7 @@ helmCharts:
               kind: GitRepository
               interval: 1m # kpt-set: ${sync-interval}
               url: https://github.com/nxmatic/fleet-manifests.git # kpt-set: ${sync-url}
-              ref: rke2-subtree # kpt-set: ${sync-ref}
+              ref: rke2 # kpt-set: ${sync-ref}
               path: bioskop # kpt-set: ${sync-path}
             storage: {}
             sharding:

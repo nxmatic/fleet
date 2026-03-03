@@ -4,7 +4,7 @@ YQ ?= yq
 FLOX_REMOTE ?= origin
 RKE2_REMOTE ?= origin
 FLOX_BRANCH ?= flox-subtree
-RKE2_BRANCH ?= rke2-subtree
+RKE2_BRANCH ?= rke2
 
 SUBTREE_REMOTE_default ?= origin
 

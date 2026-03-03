@@ -28,7 +28,7 @@ spec:
   type: git
   git:
     repo: https://github.com/nxmatic/fleet.git
-    branch: rke2-subtree # kpt-set: ${cluster-state-branch}
+    branch: rke2 # kpt-set: ${cluster-state-branch}
     directory: packagevariants/bioskop # kpt-set: ${cluster-state-directory}
     createBranch: true
     secretRef:

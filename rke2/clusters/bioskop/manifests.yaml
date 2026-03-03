@@ -31652,7 +31652,7 @@ spec:
     interval: 1m
     kind: GitRepository
     path: bioskop
-    ref: rke2-subtree
+    ref: rke2
     url: https://github.com/nxmatic/fleet.git
 ---
 apiVersion: helm.cattle.io/v1

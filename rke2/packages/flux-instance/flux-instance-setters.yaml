@@ -18,7 +18,7 @@ data:
   distribution-artifact: oci://ghcr.io/controlplaneio-fluxcd/flux-operator-manifests:latest
   sync-interval: 1m
   sync-url: https://github.com/nxmatic/fleet.git
-  sync-ref: rke2-subtree
+  sync-ref: rke2
   sync-path: bioskop
   cluster-type: kubernetes
   cluster-size: ""

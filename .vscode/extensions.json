@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "redhat.vscode-yaml",
+    "asciidoctor.asciidoctor-vscode"
+  ],
+  "unwantedRecommendations": [
+    "sonarsource.sonarlint-vscode",
+    "Codeium.codeium"
+  ]
+}

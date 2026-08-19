@@ -31614,7 +31614,7 @@ spec:
     branch: main
     createBranch: true
     directory: packagevariants/example
-    repo: https://github.com/nxmatic/fleet.git
+    repo: https://github.com/seedmatic/fleet.git
     secretRef:
       name: github-token
   type: git
@@ -31653,7 +31653,7 @@ spec:
     kind: GitRepository
     path: bioskop
     ref: rke2
-    url: https://github.com/nxmatic/fleet.git
+    url: https://github.com/seedmatic/fleet.git
 ---
 apiVersion: helm.cattle.io/v1
 kind: HelmChartConfig

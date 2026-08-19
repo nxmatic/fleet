@@ -31,6 +31,6 @@ spec:
   sync:
     kind: GitRepository
     interval: 1m
-    url: https://github.com/nxmatic/fleet.git
+    url: https://github.com/seedmatic/fleet.git
     ref: rke2
     path: bioskop
